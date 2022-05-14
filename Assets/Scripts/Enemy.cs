@@ -5,7 +5,6 @@ using UnityEngine.AI;
 
 public enum EnemyState
 {
-    //IDLING,     // Just stands
     WANDERING,  // Walks freely
     PURSUING,   // Follows the player
     ATTACKING,  // Attacks the player
@@ -17,8 +16,15 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private NavMeshAgent agent;
 
+    [Header("State settings")]
     [SerializeField]
-    private float playerStoppingDistance = 4.0f;
+    private float startPursuitDistance = 8.0f;
+
+    [SerializeField]
+    private float attackRadiusDistance = 5.0f;
+
+    [SerializeField]
+    private float fireDistance = 4.0f;
 
     [Header("Shooting settings")]
     [SerializeField]
@@ -35,7 +41,6 @@ public class Enemy : MonoBehaviour
     private Vector3 currentDestination;
     private float lastFireTime;
 
-
     private void Start()
     {
         state = EnemyState.WANDERING;
@@ -45,11 +50,25 @@ public class Enemy : MonoBehaviour
 
     private void Update()
     {
-        if (CheckStateTransitions())
+        if (state != EnemyState.DEAD)
         {
-            Debug.Log("Enemy state changed: " + state.ToString());
+            if (CheckStateTransitions())
+            {
+                Debug.Log("Enemy state changed: " + state.ToString());
+            }
+            Behave();
         }
-        Behave();
+        else
+        {
+            // When the enemy will not be instantly destroyed on hit,
+            // we can handle the dying animation/dissolve here ...
+        }
+    }
+
+    public void TakeHit()
+    {
+        state = EnemyState.DEAD;
+        Destroy(gameObject);
     }
 
     private bool CheckStateTransitions()
@@ -59,7 +78,7 @@ public class Enemy : MonoBehaviour
         if (state == EnemyState.WANDERING)
         {
             // TODO Add some "distance to player" function etc.
-            if (Vector3.Distance(player.transform.position, transform.position) < 8.0f)
+            if (Vector3.Distance(player.transform.position, transform.position) < startPursuitDistance)
             {
                 state = EnemyState.PURSUING;
                 return true;
@@ -67,12 +86,12 @@ public class Enemy : MonoBehaviour
         }
         else if (state == EnemyState.PURSUING)
         {
-            if (Vector3.Distance(player.transform.position, transform.position) < 5.0f)
+            if (Vector3.Distance(player.transform.position, transform.position) < attackRadiusDistance)
             {
                 state = EnemyState.ATTACKING;
                 return true;
             }
-            else if (Vector3.Distance(player.transform.position, transform.position) >= 8.0f)
+            else if (Vector3.Distance(player.transform.position, transform.position) >= startPursuitDistance)
             {
                 state = EnemyState.WANDERING;
                 return true;
@@ -80,7 +99,7 @@ public class Enemy : MonoBehaviour
         }
         else if (state == EnemyState.ATTACKING)
         {
-            if (Vector3.Distance(player.transform.position, transform.position) >= 5.0f)
+            if (Vector3.Distance(player.transform.position, transform.position) >= attackRadiusDistance)
             {
                 state = EnemyState.PURSUING;
                 return true;
@@ -112,7 +131,7 @@ public class Enemy : MonoBehaviour
         }
         else if (state == EnemyState.ATTACKING)
         {
-            if (Vector3.Distance(player.transform.position, transform.position) > playerStoppingDistance)
+            if (Vector3.Distance(player.transform.position, transform.position) > fireDistance)
             {
                 agent.isStopped = false;
                 currentDestination = GetPlayerNavmeshLocation();
@@ -124,14 +143,10 @@ public class Enemy : MonoBehaviour
                 agent.isStopped = true;
                 bool playerHit = false;
 
-                RaycastHit hit;
-                if (Physics.Raycast(bulletSpawnLocation.transform.position, bulletSpawnLocation.transform.forward, out hit))
+                if (SeesPlayer())
                 {
-                    if(hit.collider.gameObject.tag == "Player")
-                    {
-                        TryToFire();
-                        playerHit = true;
-                    }
+                    TryToFire();
+                    playerHit = true;
                 }
                 
                 if(!playerHit)
@@ -192,9 +207,21 @@ public class Enemy : MonoBehaviour
         return finalPosition;
     }
 
-    public void TakeHit()
+    private bool SeesPlayer(out float distance)
     {
-        Debug.Log("Took hit");
-        Destroy(gameObject);
+        RaycastHit hit;
+        if (Physics.Raycast(bulletSpawnLocation.transform.position, bulletSpawnLocation.transform.forward, out hit))
+        {
+            distance = hit.distance;
+            return hit.collider.gameObject.tag == "Player";
+        }
+
+        distance = -1.0f;
+        return false;
+    }
+
+    private bool SeesPlayer()
+    {
+        return SeesPlayer(out _);
     }
 }
