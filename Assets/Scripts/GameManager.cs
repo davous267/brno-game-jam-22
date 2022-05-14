@@ -13,6 +13,9 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private GameObject gameOverPanel;
 
+    [SerializeField]
+    private GameObject gameWonPanel;
+
     public Player Player
     {
         get => player;
@@ -25,6 +28,7 @@ public class GameManager : MonoBehaviour
         {
             Instance = this;
             gameOverPanel.SetActive(false);
+            gameWonPanel.SetActive(false);
             Time.timeScale = 1;
         } 
         else
@@ -46,8 +50,21 @@ public class GameManager : MonoBehaviour
         gameOverPanel.SetActive(true);
     }
 
+    public void GameWon()
+    {
+        Time.timeScale = 0;
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.Confined;
+        gameWonPanel.SetActive(true);
+    }
+
     public void RestartLevel()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    public void LoadMainMenu()
+    {
+        SceneManager.LoadScene(0);
     }
 }

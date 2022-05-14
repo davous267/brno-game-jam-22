@@ -33,4 +33,14 @@ public class UI : MonoBehaviour
         creditsMenu.SetActive(false);
         mainMenu.SetActive(true);
     }
+
+    public void Restart()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    public void LoadMenuScene()
+    {
+        SceneManager.LoadScene(0);
+    }
 }
