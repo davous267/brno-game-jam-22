@@ -104,6 +104,7 @@ MonoBehaviour:
   bulletTrigger: {fileID: 4152768815844595046}
   returnSpeed: 7
   forceField: {fileID: 7259561332931647360}
+  wallLifetime: 60
   enemyThatFired: {fileID: 0}
 --- !u!136 &9081338312591389255
 CapsuleCollider:

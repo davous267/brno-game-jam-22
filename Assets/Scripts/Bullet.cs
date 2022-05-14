@@ -19,6 +19,9 @@ public class Bullet : MonoBehaviour
     [SerializeField]
     private GameObject forceField;
 
+    [SerializeField]
+    private float wallLifetime = 60.0f; 
+
     private bool returningToPlayer = false;
 
     private int damage = 35;
@@ -48,6 +51,8 @@ public class Bullet : MonoBehaviour
                 gameObject.layer = 6;
                 enemyThatFired = null;
                 bulletTrigger.enabled = true;
+                // Invoke is not very good but easiest option now ...
+                Invoke("DestroyBullet", wallLifetime);
             } 
             else
             {
@@ -90,6 +95,7 @@ public class Bullet : MonoBehaviour
     {
         bulletTrigger.enabled = false;
         returningToPlayer = true;
+        CancelInvoke("DestroyBullet");
 
         //rb.GetComponent<Collider>().isTrigger = true;
         gameObject.layer = 0;
@@ -103,5 +109,10 @@ public class Bullet : MonoBehaviour
     public void HideForceField()
     {
         forceField.SetActive(false);
+    }
+
+    private void DestroyBullet()
+    {
+        Destroy(gameObject);
     }
 }
