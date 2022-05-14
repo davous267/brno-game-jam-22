@@ -18,13 +18,24 @@ public class Enemy : MonoBehaviour
 
     [Header("State settings")]
     [SerializeField]
+    [Tooltip("Distance to start pursuit if player visible")]
     private float startPursuitDistance = 8.0f;
+
+    [SerializeField]
+    [Tooltip("Distance to always start pursuit, even if player not in fov")]
+    private float startPursuitIfNotInFieldOfView = 2.0f;
 
     [SerializeField]
     private float attackRadiusDistance = 5.0f;
 
     [SerializeField]
     private float fireDistance = 4.0f;
+
+    [SerializeField]
+    private float wanderingFieldOfViewDeg = 45.0f;
+
+    [SerializeField]
+    private float pursuingFieldOfViewDeg = 180.0f;
 
     [Header("Shooting settings")]
     [SerializeField]
@@ -43,6 +54,8 @@ public class Enemy : MonoBehaviour
     private float lastFireTime;
     float dissolveStartTime;
 
+    private float FieldOfView => state == EnemyState.PURSUING || state == EnemyState.ATTACKING ? pursuingFieldOfViewDeg : wanderingFieldOfViewDeg;
+
     private void Start()
     {
         state = EnemyState.WANDERING;
@@ -59,7 +72,7 @@ public class Enemy : MonoBehaviour
             {
                 Debug.Log("Enemy state changed: " + state.ToString());
             }
-            Behave();
+            Behave();  
         }
         else
         {
@@ -83,12 +96,12 @@ public class Enemy : MonoBehaviour
 
     private bool CheckStateTransitions()
     {
-        // TODO Just temporary based only on distance (not raycast) and random constants
+        float dist;
 
         if (state == EnemyState.WANDERING)
         {
-            // TODO Add some "distance to player" function etc.
-            if (Vector3.Distance(player.transform.position, transform.position) < startPursuitDistance)
+            if ((SeesPlayer(out dist) && dist <= startPursuitDistance) ||
+                (SeesPlayer(out dist, true) && dist <= startPursuitIfNotInFieldOfView))
             {
                 state = EnemyState.PURSUING;
                 return true;
@@ -96,12 +109,12 @@ public class Enemy : MonoBehaviour
         }
         else if (state == EnemyState.PURSUING)
         {
-            if (Vector3.Distance(player.transform.position, transform.position) < attackRadiusDistance)
+            if (SeesPlayer(out dist) && dist <= attackRadiusDistance)
             {
                 state = EnemyState.ATTACKING;
                 return true;
             }
-            else if (Vector3.Distance(player.transform.position, transform.position) >= startPursuitDistance)
+            else if (!SeesPlayer(out dist) || dist > startPursuitDistance)
             {
                 state = EnemyState.WANDERING;
                 return true;
@@ -109,7 +122,7 @@ public class Enemy : MonoBehaviour
         }
         else if (state == EnemyState.ATTACKING)
         {
-            if (Vector3.Distance(player.transform.position, transform.position) >= attackRadiusDistance)
+            if (!SeesPlayer(out dist) || dist > attackRadiusDistance)
             {
                 state = EnemyState.PURSUING;
                 return true;
@@ -125,62 +138,61 @@ public class Enemy : MonoBehaviour
         {
             if (DestinationReached())
             {
-                agent.isStopped = false;
-                currentDestination = GetRandomNavmeshLocation(16.0f);
-                agent.SetDestination(currentDestination);
+                SetAgentDestination(GetRandomNavmeshLocation(16.0f));
             }
 
             Debug.DrawLine(transform.position, currentDestination, Color.green);
         }
         else if (state == EnemyState.PURSUING)
         {
-            agent.isStopped = false;
-            currentDestination = GetPlayerNavmeshLocation();
-            agent.SetDestination(currentDestination);
+            SetAgentDestination(GetPlayerNavmeshLocation());
             Debug.DrawLine(transform.position, currentDestination, Color.yellow);
         }
         else if (state == EnemyState.ATTACKING)
         {
             if (Vector3.Distance(player.transform.position, transform.position) > fireDistance)
             {
-                agent.isStopped = false;
-                currentDestination = GetPlayerNavmeshLocation();
-                agent.SetDestination(currentDestination);
+                SetAgentDestination(GetPlayerNavmeshLocation());
                 Debug.DrawLine(transform.position, currentDestination, Color.red);
             }
             else
             {
                 agent.isStopped = true;
-                bool playerHit = false;
+                bool playerInLineOfSight = IsPlayerInLineOfSight();
 
-                if (SeesPlayer())
-                {
-                    TryToFire();
-                    playerHit = true;
-                }
-                
-                if(!playerHit)
+                if (!playerInLineOfSight)
                 {
                     transform.forward = Vector3.RotateTowards(Vector3.ProjectOnPlane(transform.forward, Vector3.up),
-                        Vector3.ProjectOnPlane(player.transform.position - transform.position, Vector3.up), Mathf.Deg2Rad * agent.angularSpeed * Time.deltaTime, 0.0f).normalized;
+                        Vector3.ProjectOnPlane(player.transform.position - transform.position, Vector3.up),
+                        Mathf.Deg2Rad * agent.angularSpeed * Time.deltaTime, 0.0f).normalized;
                 }
-                    
-                
+            }
+
+            if (IsPlayerInLineOfSight())
+            {
+                TryToFire();
             }
         }
     }
 
     private void TryToFire()
     {
-        if(Time.time - lastFireTime >= fireInterval)
+        if (Time.time - lastFireTime >= fireInterval)
         {
             var newBullet = Instantiate(bulletPrefab, bulletSpawnLocation.transform.position, bulletSpawnLocation.transform.rotation);
             newBullet.GetComponent<Bullet>().enemyThatFired = gameObject;
             newBullet.GetComponent<Rigidbody>().AddForce(transform.forward * 15.0f, ForceMode.Impulse);
-            
+
 
             lastFireTime = Time.time;
         }
+    }
+
+    private void SetAgentDestination(Vector3 vec)
+    {
+        agent.isStopped = false;
+        currentDestination = vec;
+        agent.SetDestination(currentDestination);
     }
 
     private bool DestinationReached()
@@ -217,7 +229,8 @@ public class Enemy : MonoBehaviour
         return finalPosition;
     }
 
-    private bool SeesPlayer(out float distance)
+    // Returns true if player is directly in line of sight of the gun
+    private bool IsPlayerInLineOfSight(out float distance)
     {
         RaycastHit hit;
         if (Physics.Raycast(bulletSpawnLocation.transform.position, bulletSpawnLocation.transform.forward, out hit))
@@ -230,8 +243,31 @@ public class Enemy : MonoBehaviour
         return false;
     }
 
-    private bool SeesPlayer()
+    private bool IsPlayerInLineOfSight()
     {
-        return SeesPlayer(out _);
+        return IsPlayerInLineOfSight(out _);
+    }
+
+    // Returns true if the player is visible for this agent
+    private bool SeesPlayer(out float distance, bool ignoreFov = false)
+    {
+        RaycastHit hit;
+
+        if ((ignoreFov || (!ignoreFov && Vector3.Angle(
+                Vector3.ProjectOnPlane(transform.forward, Vector3.up),
+                Vector3.ProjectOnPlane(player.BarrelPosition - bulletSpawnLocation.transform.position, Vector3.up)) <= FieldOfView))
+            && Physics.Linecast(bulletSpawnLocation.transform.position, player.transform.position, out hit, ~(1 << LayerMask.NameToLayer("Enemy"))))
+        {
+            distance = hit.distance;
+            return hit.collider.gameObject.CompareTag("Player");
+        }
+
+        distance = -1.0f;
+        return false;
+    }
+
+    private bool SeesPlayer(bool ignoreFov = false)
+    {
+        return SeesPlayer(out _, ignoreFov);
     }
 }
