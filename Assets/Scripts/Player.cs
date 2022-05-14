@@ -12,6 +12,9 @@ public class Player : MonoBehaviour
     private Image crosshair;
 
     [SerializeField]
+    private Image healthBar;
+
+    [SerializeField]
     private Color higlightCrosshairColor = Color.red;
 
     [SerializeField]
@@ -26,6 +29,8 @@ public class Player : MonoBehaviour
 
     private Bullet lastBullet;
 
+    private int startHealth;
+
     public Vector3 BarrelPosition
     {
         get => gunBarrel.position;    
@@ -37,6 +42,7 @@ public class Player : MonoBehaviour
         set
         {
             health = value;
+            healthBar.fillAmount = Mathf.Max((float)health / startHealth, 0.0f);
             if(health <= 0)
             {
                 GameManager.Instance.GameOver();
@@ -47,6 +53,7 @@ public class Player : MonoBehaviour
     private void Start()
     {
         defaultCrosshairColor = crosshair.color;
+        startHealth = Health;
     }
 
     private void Update()
@@ -55,7 +62,6 @@ public class Player : MonoBehaviour
         {
             waitForButtonUp = false;
         }
-        
     }
 
     private void FixedUpdate()
