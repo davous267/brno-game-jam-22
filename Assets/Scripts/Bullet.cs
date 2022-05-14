@@ -25,11 +25,13 @@ public class Bullet : MonoBehaviour
 
     public GameObject enemyThatFired;
 
-    private void Update()
+    private void FixedUpdate()
     {
         if(returningToPlayer)
-        {        
-            transform.Translate((GameManager.Instance.Player.BarrelPosition - transform.position).normalized * Time.deltaTime * returnSpeed, Space.World);
+        {
+            var dir = (GameManager.Instance.Player.BarrelPosition - transform.position).normalized;
+            rb.rotation = Quaternion.LookRotation(-dir);
+            rb.MovePosition(transform.position + dir * Time.deltaTime * returnSpeed);
             forceField.SetActive(false);
         }
     }
