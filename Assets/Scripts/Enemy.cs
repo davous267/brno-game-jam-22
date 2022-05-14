@@ -57,7 +57,11 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private GameObject enemyGun;
 
-    private Renderer enemyRenderer;
+    
+    private Renderer[] enemyRenderer;
+
+    private Animator enemyAnimator;
+    
     private EnemyState state;
     private Player player;
     private Vector3 currentDestination;
@@ -71,7 +75,8 @@ public class Enemy : MonoBehaviour
         state = EnemyState.WANDERING;
         player = GameManager.Instance.Player;
         currentDestination = transform.position;
-        enemyRenderer = GetComponentInChildren<Renderer>();
+        enemyRenderer = GetComponentsInChildren<Renderer>();
+        enemyAnimator = GetComponentInChildren<Animator>();
     }
 
     private void Update()
@@ -87,7 +92,11 @@ public class Enemy : MonoBehaviour
         else
         {
             agent.isStopped = true;
-            enemyRenderer.material.SetFloat("StartTime", dissolveStartTime);
+
+            foreach (Renderer renderer in enemyRenderer)
+            {
+                renderer.material.SetFloat("StartTime", dissolveStartTime);
+            }
             jointsRenderer.material.SetFloat("StartTime", dissolveStartTime);
             
             dissolveStartTime -= Time.deltaTime;
@@ -101,9 +110,14 @@ public class Enemy : MonoBehaviour
     public void TakeHit()
     {
         state = EnemyState.DEAD;
-        enemyRenderer.material = dissolveMaterial;
+        enemyAnimator.SetBool("isWalking", false);
         jointsRenderer.material = dissolveMaterial;
-        dissolveStartTime = enemyRenderer.material.GetFloat("StartTime");
+
+        foreach (Renderer renderer in enemyRenderer)
+        {
+        renderer.material = dissolveMaterial;
+        dissolveStartTime = renderer.material.GetFloat("StartTime");
+        }
         dissolveStartTime = jointsRenderer.material.GetFloat("StartTime");
         enemyGun.SetActive(false);
         
@@ -116,6 +130,7 @@ public class Enemy : MonoBehaviour
 
         if (state == EnemyState.WANDERING)
         {
+            enemyAnimator.SetBool("isWalking", true);
             if ((SeesPlayer(out dist) && dist <= startPursuitDistance) ||
                 (SeesPlayer(out dist, true) && dist <= startPursuitIfNotInFieldOfView))
             {
@@ -125,6 +140,7 @@ public class Enemy : MonoBehaviour
         }
         else if (state == EnemyState.PURSUING)
         {
+            enemyAnimator.SetBool("isWalking", true);
             if (SeesPlayer(out dist) && dist <= attackRadiusDistance)
             {
                 state = EnemyState.ATTACKING;
@@ -174,6 +190,7 @@ public class Enemy : MonoBehaviour
             else
             {
                 agent.isStopped = true;
+                enemyAnimator.SetBool("isWalking", false);
                 bool playerInLineOfSight = IsPlayerInLineOfSight();
 
                 if (!playerInLineOfSight)
