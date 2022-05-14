@@ -38,14 +38,21 @@ public class Bullet : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {      
-        if(collision.gameObject.tag == "Wall" && !returningToPlayer)
+        if(collision.gameObject.tag == "Wall")
         {
-            //rb.isKinematic = true;
-            rb.velocity = Vector3.zero;
-            rb.angularVelocity = Vector3.zero;
-            gameObject.layer = 6;
-            enemyThatFired = null;
-            bulletTrigger.enabled = true;
+            if (!returningToPlayer)
+            {
+                //rb.isKinematic = true;
+                rb.velocity = Vector3.zero;
+                rb.angularVelocity = Vector3.zero;
+                gameObject.layer = 6;
+                enemyThatFired = null;
+                bulletTrigger.enabled = true;
+            } 
+            else
+            {
+                Destroy(gameObject);
+            }
         }
 
         if (collision.gameObject.tag == "Enemy" && collision.gameObject != enemyThatFired)
