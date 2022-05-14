@@ -35,7 +35,7 @@ public class Player : MonoBehaviour
             health = value;
             if(health <= 0)
             {
-                // TODO ...
+                GameManager.Instance.GameOver();
             }
         }
     }
