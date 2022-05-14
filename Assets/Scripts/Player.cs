@@ -30,7 +30,7 @@ public class Player : MonoBehaviour
         defaultCrosshairColor = crosshair.color;
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         var crosshairRay = GetScreenRay();
 
@@ -40,7 +40,7 @@ public class Player : MonoBehaviour
             crosshair.color = higlightCrosshairColor;
             var blt = hit.collider.gameObject.GetComponent<Bullet>();
 
-            if(blt && Input.GetMouseButtonDown(0))
+            if(blt && Input.GetMouseButton(0))
             {
                 blt.ReturnToPlayer();
             }

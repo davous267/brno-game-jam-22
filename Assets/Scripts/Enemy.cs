@@ -121,7 +121,25 @@ public class Enemy : MonoBehaviour
             else
             {
                 agent.isStopped = true;
-                TryToFire();
+                bool playerHit = false;
+
+                RaycastHit hit;
+                if (Physics.Raycast(bulletSpawnLocation.transform.position, bulletSpawnLocation.transform.forward, out hit))
+                {
+                    if(hit.collider.gameObject.tag == "Player")
+                    {
+                        TryToFire();
+                        playerHit = true;
+                    }
+                }
+                
+                if(!playerHit)
+                {
+                    transform.forward = Vector3.RotateTowards(Vector3.ProjectOnPlane(transform.forward, Vector3.up),
+                        Vector3.ProjectOnPlane(player.transform.position - transform.position, Vector3.up), Mathf.Deg2Rad * agent.angularSpeed * Time.deltaTime, 0.0f).normalized;
+                }
+                    
+                
             }
         }
     }
