@@ -51,6 +51,12 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private Material dissolveMaterial;
 
+    [SerializeField]
+    private Renderer jointsRenderer;
+
+    [SerializeField]
+    private GameObject enemyGun;
+
     private Renderer enemyRenderer;
     private EnemyState state;
     private Player player;
@@ -82,6 +88,8 @@ public class Enemy : MonoBehaviour
         {
             agent.isStopped = true;
             enemyRenderer.material.SetFloat("StartTime", dissolveStartTime);
+            jointsRenderer.material.SetFloat("StartTime", dissolveStartTime);
+            
             dissolveStartTime -= Time.deltaTime;
             if(dissolveStartTime < 0)
             {
@@ -94,8 +102,12 @@ public class Enemy : MonoBehaviour
     {
         state = EnemyState.DEAD;
         enemyRenderer.material = dissolveMaterial;
+        jointsRenderer.material = dissolveMaterial;
         dissolveStartTime = enemyRenderer.material.GetFloat("StartTime");
+        dissolveStartTime = jointsRenderer.material.GetFloat("StartTime");
+        enemyGun.SetActive(false);
         
+
     }
 
     private bool CheckStateTransitions()
