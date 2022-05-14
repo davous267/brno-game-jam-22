@@ -50,7 +50,7 @@ public class Player : MonoBehaviour
         var crosshairRay = GetScreenRay();
 
         RaycastHit hit;
-        if (Physics.Raycast(crosshairRay, out hit, 1000.0f, bulletWallLayer.value, QueryTriggerInteraction.Ignore))
+        if (Physics.Raycast(crosshairRay, out hit, 1000.0f, bulletWallLayer.value, QueryTriggerInteraction.Collide))
         {
             crosshair.color = higlightCrosshairColor;
             var blt = hit.collider.gameObject.GetComponent<Bullet>();
