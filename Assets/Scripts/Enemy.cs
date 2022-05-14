@@ -35,6 +35,7 @@ public class Enemy : MonoBehaviour
     private Vector3 currentDestination;
     private float lastFireTime;
 
+
     private void Start()
     {
         state = EnemyState.WANDERING;
@@ -187,5 +188,11 @@ public class Enemy : MonoBehaviour
             finalPosition = hit.position;
         }
         return finalPosition;
+    }
+
+    public void TakeHit()
+    {
+        Debug.Log("Took hit");
+        Destroy(gameObject);
     }
 }

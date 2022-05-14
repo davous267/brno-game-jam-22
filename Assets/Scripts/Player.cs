@@ -17,7 +17,15 @@ public class Player : MonoBehaviour
     [SerializeField]
     private LayerMask bulletWallLayer;
 
+    [SerializeField]
+    private Transform gunBarrel;
+
     private Color defaultCrosshairColor;
+
+    public Vector3 BarrelPosition
+    {
+        get => gunBarrel.position;    
+    }
 
     public int Health
     {
