@@ -126,7 +126,7 @@ Material:
     - _intersectionMultiplier: 1
     - _intersectionOffset: 0.9
     - _rimGlowNoiseDensity: 4
-    - _rimGlowNoiseSpeed: 0.1
+    - _rimGlowNoiseSpeed: 0.5
     - _rimPulseSpeed: 0.1
     - _scanSize: 0.8
     - _scanSpeed: 1
