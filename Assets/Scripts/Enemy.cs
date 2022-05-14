@@ -47,10 +47,12 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private float fireInterval = 3.0f;
 
+    private Renderer enemyRenderer;
     private EnemyState state;
     private Player player;
     private Vector3 currentDestination;
     private float lastFireTime;
+    float dissolveStartTime;
 
     private float FieldOfView => state == EnemyState.PURSUING || state == EnemyState.ATTACKING ? pursuingFieldOfViewDeg : wanderingFieldOfViewDeg;
 
@@ -59,6 +61,7 @@ public class Enemy : MonoBehaviour
         state = EnemyState.WANDERING;
         player = GameManager.Instance.Player;
         currentDestination = transform.position;
+        enemyRenderer = GetComponent<Renderer>();
     }
 
     private void Update()
@@ -73,6 +76,12 @@ public class Enemy : MonoBehaviour
         }
         else
         {
+            enemyRenderer.material.SetFloat("StartTime", dissolveStartTime);
+            dissolveStartTime -= Time.deltaTime;
+            if(dissolveStartTime < 0)
+            {
+                Destroy(gameObject);
+            }
             // When the enemy will not be instantly destroyed on hit,
             // we can handle the dying animation/dissolve here ...
         }
@@ -81,7 +90,8 @@ public class Enemy : MonoBehaviour
     public void TakeHit()
     {
         state = EnemyState.DEAD;
-        Destroy(gameObject);
+        dissolveStartTime = enemyRenderer.material.GetFloat("StartTime");
+        
     }
 
     private bool CheckStateTransitions()
