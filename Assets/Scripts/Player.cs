@@ -30,7 +30,14 @@ public class Player : MonoBehaviour
     public int Health
     {
         get => health;
-        set => health = value; // TODO Check for game over
+        set
+        {
+            health = value;
+            if(health <= 0)
+            {
+                // TODO ...
+            }
+        }
     }
 
     private void Start()
@@ -62,5 +69,11 @@ public class Player : MonoBehaviour
     private Ray GetScreenRay()
     {
         return Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
+    }
+
+    public void TakeDamage(int damage)
+    {
+        Health -= damage;
+        Debug.Log(Health);
     }
 }
