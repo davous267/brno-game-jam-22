@@ -147,6 +147,7 @@ MonoBehaviour:
   bulletSpawnLocation: {fileID: 1111800602575361256}
   bulletPrefab: {fileID: 730132911528377985, guid: 26989a4fe656cd2468dff719aa646081, type: 3}
   fireInterval: 1
+  dissolveMaterial: {fileID: 2100000, guid: 4809272e50b233342a42ed43ecbc8ce5, type: 2}
 --- !u!136 &870090925593016076
 CapsuleCollider:
   m_ObjectHideFlags: 0
