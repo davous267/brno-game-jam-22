@@ -30,6 +30,7 @@ public class Bullet : MonoBehaviour
         if(returningToPlayer)
         {        
             transform.Translate((GameManager.Instance.Player.BarrelPosition - transform.position).normalized * Time.deltaTime * returnSpeed, Space.World);
+            forceField.SetActive(false);
         }
     }
 
