@@ -7,7 +7,11 @@ public class Bullet : MonoBehaviour
     [SerializeField]
     private Rigidbody rb;
 
+    [SerializeField]
     private Collider bulletCollider;
+
+    [SerializeField]
+    private Collider bulletTrigger;
 
     private bool returningToPlayer = false;
 
@@ -15,10 +19,6 @@ public class Bullet : MonoBehaviour
 
     public GameObject enemyThatFired;
 
-    private void Start()
-    {
-        bulletCollider = GetComponent<Collider>();
-    }
     private void Update()
     {
         if(returningToPlayer)
@@ -37,6 +37,7 @@ public class Bullet : MonoBehaviour
             rb.angularVelocity = Vector3.zero;
             gameObject.layer = 6;
             enemyThatFired = null;
+            bulletTrigger.enabled = true;
         }
 
         if (collision.gameObject.tag == "Enemy" && collision.gameObject != enemyThatFired)
@@ -72,6 +73,7 @@ public class Bullet : MonoBehaviour
 
     public void ReturnToPlayer()
     {
+        bulletTrigger.enabled = false;
         returningToPlayer = true;
         //rb.GetComponent<Collider>().isTrigger = true;
         gameObject.layer = 0;
