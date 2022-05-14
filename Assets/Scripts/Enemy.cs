@@ -150,7 +150,9 @@ public class Enemy : MonoBehaviour
         if(Time.time - lastFireTime >= fireInterval)
         {
             var newBullet = Instantiate(bulletPrefab, bulletSpawnLocation.transform.position, bulletSpawnLocation.transform.rotation);
+            newBullet.GetComponent<Bullet>().enemyThatFired = gameObject;
             newBullet.GetComponent<Rigidbody>().AddForce(transform.forward * 300.0f, ForceMode.Acceleration);
+            
 
             lastFireTime = Time.time;
         }

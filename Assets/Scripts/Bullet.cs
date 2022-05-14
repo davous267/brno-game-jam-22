@@ -7,8 +7,16 @@ public class Bullet : MonoBehaviour
     [SerializeField]
     private Rigidbody rb;
 
+    private Collider bulletCollider;
+
     private bool returningToPlayer = false;
 
+    public GameObject enemyThatFired;
+
+    private void Start()
+    {
+        bulletCollider = GetComponent<Collider>();
+    }
     private void Update()
     {
         if(returningToPlayer)
@@ -19,18 +27,19 @@ public class Bullet : MonoBehaviour
     }
 
     private void OnCollisionEnter(Collision collision)
-    {
+    {      
         if(collision.gameObject.tag == "Wall" && !returningToPlayer)
         {
             //rb.isKinematic = true;
             rb.velocity = Vector3.zero;
             rb.angularVelocity = Vector3.zero;
             gameObject.layer = 6;
+            enemyThatFired = null;
         }
 
-        if (collision.gameObject.tag == "Enemy")
-        {
-            collision.collider.GetComponent<Enemy>().TakeHit();
+        if (collision.gameObject.tag == "Enemy" && collision.gameObject != enemyThatFired)
+        {          
+                collision.collider.GetComponent<Enemy>().TakeHit();          
         }
     }
 
