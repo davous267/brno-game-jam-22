@@ -22,6 +22,8 @@ public class Player : MonoBehaviour
 
     private Color defaultCrosshairColor;
 
+    private bool waitForButtonUp;
+
     public Vector3 BarrelPosition
     {
         get => gunBarrel.position;    
@@ -45,6 +47,15 @@ public class Player : MonoBehaviour
         defaultCrosshairColor = crosshair.color;
     }
 
+    private void Update()
+    {
+        if (Input.GetMouseButtonUp(0))
+        {
+            waitForButtonUp = false;
+        }
+        
+    }
+
     private void FixedUpdate()
     {
         var crosshairRay = GetScreenRay();
@@ -55,9 +66,10 @@ public class Player : MonoBehaviour
             crosshair.color = higlightCrosshairColor;
             var blt = hit.collider.gameObject.GetComponent<Bullet>();
 
-            if(blt && Input.GetMouseButton(0))
+            if(blt && Input.GetMouseButton(0) && !waitForButtonUp)
             {
                 blt.ReturnToPlayer();
+                waitForButtonUp = true;
             }
         }
         else
