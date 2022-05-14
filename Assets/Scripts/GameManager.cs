@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -24,6 +25,7 @@ public class GameManager : MonoBehaviour
         {
             Instance = this;
             gameOverPanel.SetActive(false);
+            Time.timeScale = 1;
         } 
         else
         {
@@ -42,5 +44,10 @@ public class GameManager : MonoBehaviour
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.Confined;
         gameOverPanel.SetActive(true);
+    }
+
+    public void RestartLevel()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }
