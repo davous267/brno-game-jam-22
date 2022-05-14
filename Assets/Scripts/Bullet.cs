@@ -13,6 +13,9 @@ public class Bullet : MonoBehaviour
     [SerializeField]
     private Collider bulletTrigger;
 
+    [SerializeField]
+    private float returnSpeed = 7f;
+
     private bool returningToPlayer = false;
 
     private int damage = 35;
@@ -22,9 +25,8 @@ public class Bullet : MonoBehaviour
     private void Update()
     {
         if(returningToPlayer)
-        {
-            
-            transform.Translate((GameManager.Instance.Player.BarrelPosition - transform.position).normalized * Time.deltaTime * 15, Space.World);
+        {        
+            transform.Translate((GameManager.Instance.Player.BarrelPosition - transform.position).normalized * Time.deltaTime * returnSpeed, Space.World);
         }
     }
 
@@ -75,6 +77,7 @@ public class Bullet : MonoBehaviour
     {
         bulletTrigger.enabled = false;
         returningToPlayer = true;
+
         //rb.GetComponent<Collider>().isTrigger = true;
         gameObject.layer = 0;
     }
