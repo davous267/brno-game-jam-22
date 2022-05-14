@@ -80,14 +80,13 @@ public class Enemy : MonoBehaviour
         }
         else
         {
+            agent.isStopped = true;
             enemyRenderer.material.SetFloat("StartTime", dissolveStartTime);
             dissolveStartTime -= Time.deltaTime;
             if(dissolveStartTime < 0)
             {
                 Destroy(gameObject);
             }
-            // When the enemy will not be instantly destroyed on hit,
-            // we can handle the dying animation/dissolve here ...
         }
     }
 
