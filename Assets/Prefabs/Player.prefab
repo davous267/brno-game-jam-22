@@ -26,7 +26,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2337376851291721330}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.199}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.083746575, y: 0.075200714, z: 0.214105}
   m_Children: []
   m_Father: {fileID: 9082685694718964980}
@@ -1258,9 +1258,10 @@ GameObject:
   m_Component:
   - component: {fileID: 9082685694718964980}
   - component: {fileID: 4278802571320583844}
+  - component: {fileID: 7909905489622953259}
   m_Layer: 0
   m_Name: Barrel
-  m_TagString: Untagged
+  m_TagString: Gun Barrel
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1273,7 +1274,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8197775210977187779}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.2144, y: 1.218, z: 0.726}
+  m_LocalPosition: {x: 0.2144, y: 1.218, z: 0.5083}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1064017900104504222}
@@ -1288,6 +1289,19 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8197775210977187779}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!65 &7909905489622953259
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8197775210977187779}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.09721717, y: 0.07775545, z: 0.095990956}
+  m_Center: {x: 0.00066305697, y: 0.000047326088, z: 0.07}
 --- !u!1 &8457323228610084442
 GameObject:
   m_ObjectHideFlags: 0

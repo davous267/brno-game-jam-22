@@ -151,7 +151,7 @@ public class Enemy : MonoBehaviour
         {
             var newBullet = Instantiate(bulletPrefab, bulletSpawnLocation.transform.position, bulletSpawnLocation.transform.rotation);
             newBullet.GetComponent<Bullet>().enemyThatFired = gameObject;
-            newBullet.GetComponent<Rigidbody>().AddForce(transform.forward * 300.0f, ForceMode.Acceleration);
+            newBullet.GetComponent<Rigidbody>().AddForce(transform.forward * 15.0f, ForceMode.Impulse);
             
 
             lastFireTime = Time.time;

@@ -11,6 +11,8 @@ public class Bullet : MonoBehaviour
 
     private bool returningToPlayer = false;
 
+    private int damage = 35;
+
     public GameObject enemyThatFired;
 
     private void Start()
@@ -22,7 +24,7 @@ public class Bullet : MonoBehaviour
         if(returningToPlayer)
         {
             
-            transform.Translate((GameManager.Instance.Player.BarrelPosition - transform.position).normalized * Time.deltaTime * 10, Space.World);
+            transform.Translate((GameManager.Instance.Player.BarrelPosition - transform.position).normalized * Time.deltaTime * 15, Space.World);
         }
     }
 
@@ -39,7 +41,32 @@ public class Bullet : MonoBehaviour
 
         if (collision.gameObject.tag == "Enemy" && collision.gameObject != enemyThatFired)
         {          
-                collision.collider.GetComponent<Enemy>().TakeHit();          
+                collision.collider.GetComponent<Enemy>().TakeHit();
+                Destroy(gameObject);
+        }
+
+        if (collision.gameObject.tag == "Player")
+        {
+            if (returningToPlayer)
+            {
+                Destroy(gameObject);
+            }
+            else
+            {
+                collision.gameObject.GetComponent<Player>().TakeDamage(damage);
+                Destroy(gameObject);
+            }
+        }
+    }
+
+    private void OnTriggerEnter(Collider collider)
+    {
+        if(returningToPlayer)
+        {
+            if (collider.gameObject.tag == "Gun Barrel")
+            {
+                Destroy(gameObject);
+            }
         }
     }
 
