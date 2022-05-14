@@ -47,6 +47,10 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private float fireInterval = 3.0f;
 
+    [Header("Materials")]
+    [SerializeField]
+    private Material dissolveMaterial;
+
     private Renderer enemyRenderer;
     private EnemyState state;
     private Player player;
@@ -90,6 +94,7 @@ public class Enemy : MonoBehaviour
     public void TakeHit()
     {
         state = EnemyState.DEAD;
+        enemyRenderer.material = dissolveMaterial;
         dissolveStartTime = enemyRenderer.material.GetFloat("StartTime");
         
     }
