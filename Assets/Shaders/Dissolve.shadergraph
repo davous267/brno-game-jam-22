@@ -201,34 +201,6 @@
         {
             "m_OutputSlot": {
                 "m_Node": {
-                    "m_Id": "b35992cc563040879dbd595a751481b6"
-                },
-                "m_SlotId": 3
-            },
-            "m_InputSlot": {
-                "m_Node": {
-                    "m_Id": "0c091cafc7c94725b09d729a67a320ad"
-                },
-                "m_SlotId": 0
-            }
-        },
-        {
-            "m_OutputSlot": {
-                "m_Node": {
-                    "m_Id": "b35992cc563040879dbd595a751481b6"
-                },
-                "m_SlotId": 3
-            },
-            "m_InputSlot": {
-                "m_Node": {
-                    "m_Id": "f476ce57de224050bbbf72b708ba27f5"
-                },
-                "m_SlotId": 0
-            }
-        },
-        {
-            "m_OutputSlot": {
-                "m_Node": {
                     "m_Id": "c8e4d5a482734aa19336699233bdf2f4"
                 },
                 "m_SlotId": 2
@@ -277,7 +249,21 @@
             },
             "m_InputSlot": {
                 "m_Node": {
-                    "m_Id": "b35992cc563040879dbd595a751481b6"
+                    "m_Id": "0c091cafc7c94725b09d729a67a320ad"
+                },
+                "m_SlotId": 0
+            }
+        },
+        {
+            "m_OutputSlot": {
+                "m_Node": {
+                    "m_Id": "da66bf0e83094d41a9b3919b781abe65"
+                },
+                "m_SlotId": 3
+            },
+            "m_InputSlot": {
+                "m_Node": {
+                    "m_Id": "f476ce57de224050bbbf72b708ba27f5"
                 },
                 "m_SlotId": 0
             }
@@ -531,7 +517,7 @@
     "m_ShaderOutputName": "B",
     "m_StageCapability": 3,
     "m_Value": {
-        "x": 1.0,
+        "x": 0.5,
         "y": 1.0,
         "z": 1.0,
         "w": 1.0
@@ -1432,7 +1418,7 @@
     "m_StageCapability": 3,
     "m_Value": {
         "x": 0.0,
-        "y": 1.0
+        "y": 2.0
     },
     "m_DefaultValue": {
         "x": 0.0,
@@ -1694,7 +1680,7 @@
     "m_StageCapability": 3,
     "m_Value": {
         "x": 0.0,
-        "y": 1.0
+        "y": 2.0
     },
     "m_DefaultValue": {
         "x": 0.0,
@@ -1903,9 +1889,9 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -286.9999694824219,
-            "y": 255.00001525878907,
-            "width": 208.0,
+            "x": -367.99993896484377,
+            "y": 363.0000305175781,
+            "width": 208.00001525878907,
             "height": 326.0
         }
     },
