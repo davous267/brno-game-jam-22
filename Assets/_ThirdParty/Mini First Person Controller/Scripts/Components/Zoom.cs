@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-[ExecuteInEditMode]
+
 public class Zoom : MonoBehaviour
 {
     new Camera camera;

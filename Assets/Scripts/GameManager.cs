@@ -9,6 +9,9 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private Player player;
 
+    [SerializeField]
+    private GameObject gameOverPanel;
+
     public Player Player
     {
         get => player;
@@ -20,10 +23,24 @@ public class GameManager : MonoBehaviour
         if(Instance == null)
         {
             Instance = this;
+            gameOverPanel.SetActive(false);
         } 
         else
         {
             Destroy(gameObject);
         }
+    }
+
+    private void OnDestroy()
+    {
+        Instance = null;
+    }
+
+    public void GameOver()
+    {
+        Time.timeScale = 0;
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.Confined;
+        gameOverPanel.SetActive(true);
     }
 }
