@@ -16,6 +16,9 @@ public class Bullet : MonoBehaviour
     [SerializeField]
     private float returnSpeed = 7f;
 
+    [SerializeField]
+    private GameObject forceField;
+
     private bool returningToPlayer = false;
 
     private int damage = 35;
@@ -80,5 +83,15 @@ public class Bullet : MonoBehaviour
 
         //rb.GetComponent<Collider>().isTrigger = true;
         gameObject.layer = 0;
+    }
+
+    public void ShowForceField()
+    {
+        forceField.SetActive(true);
+    }
+
+    public void HideForceField()
+    {
+        forceField.SetActive(false);
     }
 }
