@@ -65,7 +65,7 @@ public class Enemy : MonoBehaviour
         state = EnemyState.WANDERING;
         player = GameManager.Instance.Player;
         currentDestination = transform.position;
-        enemyRenderer = GetComponent<Renderer>();
+        enemyRenderer = GetComponentInChildren<Renderer>();
     }
 
     private void Update()
@@ -237,7 +237,7 @@ public class Enemy : MonoBehaviour
     private bool IsPlayerInLineOfSight(out float distance)
     {
         RaycastHit hit;
-        if (Physics.Raycast(bulletSpawnLocation.transform.position, bulletSpawnLocation.transform.forward, out hit))
+        if (Physics.Raycast(bulletSpawnLocation.transform.position, (player.BarrelPosition - bulletSpawnLocation.transform.position).normalized, out hit))
         {
             distance = hit.distance;
             return hit.collider.gameObject.tag == "Player";
