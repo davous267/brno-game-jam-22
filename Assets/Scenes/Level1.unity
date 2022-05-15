@@ -1273,6 +1273,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b00da0666430aea4abca9ad0009700b6, type: 3}
+--- !u!1 &752828443976481673 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6198249231885283509, guid: b00da0666430aea4abca9ad0009700b6, type: 3}
+  m_PrefabInstance: {fileID: 752828443976481672}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4155429786053541661
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1284,6 +1289,10 @@ PrefabInstance:
       propertyPath: crosshair
       value: 
       objectReference: {fileID: 1628476222}
+    - target: {fileID: 2129650895947798953, guid: 0de9a592302c76f41981c260dab8efa3, type: 3}
+      propertyPath: bloodyVignette
+      value: 
+      objectReference: {fileID: 752828443976481673}
     - target: {fileID: 4154007556476299697, guid: 0de9a592302c76f41981c260dab8efa3, type: 3}
       propertyPath: m_RootOrder
       value: 9

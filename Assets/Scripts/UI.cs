@@ -29,7 +29,6 @@ public class UI : MonoBehaviour
 
     public void ReturnToMenu()
     {
-        Time.timeScale = 1;
         creditsMenu.SetActive(false);
         mainMenu.SetActive(true);
     }
@@ -41,6 +40,7 @@ public class UI : MonoBehaviour
 
     public void LoadMenuScene()
     {
+        Time.timeScale = 1;
         SceneManager.LoadScene(0);
     }
 }

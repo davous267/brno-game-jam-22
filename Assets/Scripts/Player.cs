@@ -38,6 +38,9 @@ public class Player : MonoBehaviour
     [SerializeField]
     private TMPro.TMP_Text enemyCountText;
 
+    [SerializeField]
+    private GameObject bloodyVignette;
+
     private AudioSource audioSource;
     private Color defaultCrosshairColor;
     private bool waitForButtonUp;
@@ -125,6 +128,7 @@ public class Player : MonoBehaviour
     public void TakeDamage(int damage)
     {
         Health -= damage;
+        StartCoroutine(ShowDamageVignette());
     }
 
     private Ray GetScreenRay()
@@ -145,5 +149,16 @@ public class Player : MonoBehaviour
         }
 
         currentActiveGunScreen = idx;
+    }
+
+    private IEnumerator ShowDamageVignette()
+    {
+        if(!bloodyVignette.activeInHierarchy)
+        {
+            bloodyVignette.SetActive(true);
+            yield return new WaitForSeconds(0.3f);
+            bloodyVignette.SetActive(false);
+        }
+    
     }
 }
