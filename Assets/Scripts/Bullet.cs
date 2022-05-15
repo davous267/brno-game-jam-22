@@ -28,9 +28,18 @@ public class Bullet : MonoBehaviour
     [SerializeField]
     private TrailRenderer trailRenderer;
 
+    [SerializeField]
+    private AudioClip reverseBulletSound;
+
+    private AudioSource audioSource;
     private bool returningToPlayer = false;
+    private bool playedReverseAudio = false;
 
     public GameObject enemyThatFired;
+    private void Start()
+    {
+        audioSource = GetComponent<AudioSource>();
+    }
 
     private void FixedUpdate()
     {
@@ -40,6 +49,13 @@ public class Bullet : MonoBehaviour
             rb.rotation = Quaternion.LookRotation(-dir);
             rb.MovePosition(transform.position + dir * Time.deltaTime * returnSpeed);
             forceField.SetActive(false);
+
+            if((Vector3.Distance(transform.position, GameManager.Instance.Player.BarrelPosition)) <= 4f && !audioSource.isPlaying && !playedReverseAudio)
+            {              
+                audioSource.PlayOneShot(reverseBulletSound, 1f);
+                playedReverseAudio = true;
+            }
+
         }
     }
 

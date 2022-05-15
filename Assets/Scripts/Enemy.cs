@@ -57,7 +57,18 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private GameObject enemyGun;
 
+    [Header("Audio")]
+    [SerializeField]
+    private AudioClip enemyHit;
 
+    [SerializeField]
+    private AudioClip enemyShot;
+
+    [SerializeField]
+    private AudioClip enemyWalk;
+
+
+    private AudioSource audioSource;
     private Renderer[] enemyRenderer;
 
     private Animator enemyAnimator;
@@ -77,6 +88,7 @@ public class Enemy : MonoBehaviour
         currentDestination = transform.position;
         enemyRenderer = GetComponentsInChildren<Renderer>();
         enemyAnimator = GetComponentInChildren<Animator>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     private void Update()
@@ -119,6 +131,7 @@ public class Enemy : MonoBehaviour
             state = EnemyState.DEAD;
             enemyAnimator.SetBool("isWalking", false);
             jointsRenderer.material = dissolveMaterial;
+            audioSource.PlayOneShot(enemyHit, 0.2f);
 
             foreach (Renderer renderer in enemyRenderer)
             {
@@ -222,6 +235,7 @@ public class Enemy : MonoBehaviour
             var newBullet = Instantiate(bulletPrefab, bulletSpawnLocation.transform.position, bulletSpawnLocation.transform.rotation);
             newBullet.GetComponent<Bullet>().enemyThatFired = gameObject;
             newBullet.GetComponent<Rigidbody>().AddForce(transform.forward * 15.0f, ForceMode.Impulse);
+            audioSource.PlayOneShot(enemyShot, 0.2f);
 
 
             lastFireTime = Time.time;
