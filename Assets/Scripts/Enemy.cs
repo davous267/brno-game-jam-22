@@ -55,6 +55,18 @@ public class Enemy : MonoBehaviour
     private Renderer jointsRenderer;
 
     [SerializeField]
+    private Renderer bodyRenderer;
+
+    [SerializeField]
+    private Material greenMaterial;
+
+    [SerializeField]
+    private Material redMaterial;
+
+    [SerializeField]
+    private Material jointMaterial;
+
+    [SerializeField]
     private GameObject enemyGun;
 
     [Header("Audio")]
@@ -153,6 +165,7 @@ public class Enemy : MonoBehaviour
                 (SeesPlayer(out dist, true) && dist <= startPursuitIfNotInFieldOfView))
             {
                 state = EnemyState.PURSUING;
+                bodyRenderer.materials = new Material[] { redMaterial, jointMaterial };
                 return true;
             }
         }
@@ -162,11 +175,13 @@ public class Enemy : MonoBehaviour
             if (SeesPlayer(out dist) && dist <= attackRadiusDistance)
             {
                 state = EnemyState.ATTACKING;
+                bodyRenderer.materials = new Material[] { redMaterial, jointMaterial };
                 return true;
             }
             else if (!SeesPlayer(out dist) || dist > startPursuitDistance)
             {
                 state = EnemyState.WANDERING;
+                bodyRenderer.materials = new Material[] { greenMaterial, jointMaterial };
                 return true;
             }
         }
