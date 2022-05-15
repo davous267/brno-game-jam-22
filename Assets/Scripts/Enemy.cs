@@ -57,11 +57,11 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private GameObject enemyGun;
 
-    
+
     private Renderer[] enemyRenderer;
 
     private Animator enemyAnimator;
-    
+
     private EnemyState state;
     private Player player;
     private Vector3 currentDestination;
@@ -87,7 +87,7 @@ public class Enemy : MonoBehaviour
             {
                 Debug.Log("Enemy state changed: " + state.ToString());
             }
-            Behave();  
+            Behave();
         }
         else
         {
@@ -98,9 +98,9 @@ public class Enemy : MonoBehaviour
                 renderer.material.SetFloat("StartTime", dissolveStartTime);
             }
             jointsRenderer.material.SetFloat("StartTime", dissolveStartTime);
-            
+
             dissolveStartTime -= Time.deltaTime;
-            if(dissolveStartTime < 0)
+            if (dissolveStartTime < 0)
             {
                 Destroy(gameObject);
             }
@@ -120,8 +120,8 @@ public class Enemy : MonoBehaviour
 
         foreach (Renderer renderer in enemyRenderer)
         {
-        renderer.material = dissolveMaterial;
-        dissolveStartTime = renderer.material.GetFloat("StartTime");
+            renderer.material = dissolveMaterial;
+            dissolveStartTime = renderer.material.GetFloat("StartTime");
         }
         dissolveStartTime = jointsRenderer.material.GetFloat("StartTime");
         enemyGun.SetActive(false);
