@@ -1557,6 +1557,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -300
       objectReference: {fileID: 0}
+    - target: {fileID: 2137105634, guid: b00da0666430aea4abca9ad0009700b6, type: 3}
+      propertyPath: m_RootOrder
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 752828443619988858, guid: b00da0666430aea4abca9ad0009700b6, type: 3}
       propertyPath: m_Name
       value: Canvas
@@ -1667,6 +1671,10 @@ PrefabInstance:
       propertyPath: bloodyVignette
       value: 
       objectReference: {fileID: 752828443976481673}
+    - target: {fileID: 2129650895947798953, guid: 0de9a592302c76f41981c260dab8efa3, type: 3}
+      propertyPath: userInterfaceScript
+      value: 
+      objectReference: {fileID: 1047117418}
     - target: {fileID: 4154007556476299697, guid: 0de9a592302c76f41981c260dab8efa3, type: 3}
       propertyPath: m_RootOrder
       value: 7

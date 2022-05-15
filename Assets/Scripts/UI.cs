@@ -11,6 +11,9 @@ public class UI : MonoBehaviour
     [SerializeField]
     GameObject mainMenu;
 
+    [SerializeField]
+    GameObject pauseMenu;
+
     public void PlayGame()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
@@ -47,5 +50,21 @@ public class UI : MonoBehaviour
     {
         Time.timeScale = 1;
         SceneManager.LoadScene(0);
+    }
+
+    public void PauseMenuEnter()
+    {
+        Time.timeScale = 0f;
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+        pauseMenu.SetActive(true);
+    }
+
+    public void PauseMenuExit()
+    {
+        Time.timeScale = 1;
+        Cursor.visible = false; 
+        Cursor.lockState = CursorLockMode.Locked;
+        pauseMenu.SetActive(false);
     }
 }

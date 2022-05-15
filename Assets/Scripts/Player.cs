@@ -41,6 +41,9 @@ public class Player : MonoBehaviour
     [SerializeField]
     private GameObject bloodyVignette;
 
+    [SerializeField]
+    private UI userInterfaceScript;
+
     private Color defaultCrosshairColor;
     private bool waitForButtonUp;
     private Bullet lastBullet;
@@ -90,6 +93,12 @@ public class Player : MonoBehaviour
         if(Input.GetMouseButtonDown(1))
         {
             SetActiveGunScreen((currentActiveGunScreen + 1) % gunScreens.Length);
+        }
+
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            userInterfaceScript.PauseMenuEnter();
+
         }
     }
 

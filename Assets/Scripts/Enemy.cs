@@ -143,6 +143,7 @@ public class Enemy : MonoBehaviour
             enemyAnimator.SetBool("isWalking", false);
             jointsRenderer.material = dissolveMaterial;
             audioSource.PlayOneShot(enemyHit, 0.2f);
+            GetComponent<Collider>().enabled = false;
 
             foreach (Renderer renderer in enemyRenderer)
             {
