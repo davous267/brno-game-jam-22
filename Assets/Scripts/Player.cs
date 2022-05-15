@@ -18,6 +18,9 @@ public class Player : MonoBehaviour
     private Color higlightCrosshairColor = Color.red;
 
     [SerializeField]
+    private LayerMask raycastLayers;
+
+    [SerializeField]
     private LayerMask bulletWallLayer;
 
     [SerializeField]
@@ -77,9 +80,10 @@ public class Player : MonoBehaviour
         var crosshairRay = GetScreenRay();
 
         RaycastHit hit;
-        if (Physics.Raycast(crosshairRay, out hit, 1000.0f, bulletWallLayer.value, QueryTriggerInteraction.Collide))
+        if (Physics.Raycast(crosshairRay, out hit, 1000.0f, raycastLayers.value, QueryTriggerInteraction.Collide) &&
+            ((1 << hit.collider.gameObject.layer) & bulletWallLayer) != 0)
         {
-            crosshair.color = higlightCrosshairColor;
+            crosshair.color = higlightCrosshairColor;;
             var blt = hit.collider.gameObject.GetComponent<Bullet>();
             blt.ShowForceField();
             lastBullet = blt;
