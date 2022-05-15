@@ -8,13 +8,13 @@ public class Bullet : MonoBehaviour
     private Rigidbody rb;
 
     [SerializeField]
-    private Collider bulletCollider;
-
-    [SerializeField]
     private Collider bulletTrigger;
 
     [SerializeField]
     private float returnSpeed = 7f;
+
+    [SerializeField]
+    private Gradient returnTrailGradient;
 
     [SerializeField]
     private GameObject forceField;
@@ -24,6 +24,9 @@ public class Bullet : MonoBehaviour
 
     [SerializeField]
     private int damage = 10;
+
+    [SerializeField]
+    private TrailRenderer trailRenderer;
 
     private bool returningToPlayer = false;
 
@@ -97,7 +100,7 @@ public class Bullet : MonoBehaviour
         bulletTrigger.enabled = false;
         returningToPlayer = true;
         CancelInvoke("DestroyBullet");
-
+        trailRenderer.colorGradient = returnTrailGradient;
         //rb.GetComponent<Collider>().isTrigger = true;
         gameObject.layer = 0;
     }
