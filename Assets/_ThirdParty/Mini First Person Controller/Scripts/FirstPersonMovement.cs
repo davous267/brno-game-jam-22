@@ -54,8 +54,9 @@ public class FirstPersonMovement : MonoBehaviour
         rigidbody.velocity = transform.rotation * new Vector3(targetVelocity.x, rigidbody.velocity.y, targetVelocity.y);
 
         // Head bob ...
-        float hbAmplitude = targetVelocity.magnitude <= float.Epsilon ? headBobIdling : (IsRunning ? headBobSprint : headBobNormal);
-        float hbFerqMult = targetVelocity.magnitude <= float.Epsilon ? 1.0f : headBobFreqMultiplier;
+        bool isIdling = targetVelocity.magnitude <= float.Epsilon;
+        float hbAmplitude = isIdling ? headBobIdling : (IsRunning ? headBobSprint : headBobNormal);
+        float hbFerqMult = isIdling ? 1.0f : headBobFreqMultiplier;
 
         fpsCamera.transform.Translate(new Vector3(0.0f, Mathf.Sin(Time.time * targetMovingSpeed * hbFerqMult) * hbAmplitude, 0.0f), Space.Self);
     }

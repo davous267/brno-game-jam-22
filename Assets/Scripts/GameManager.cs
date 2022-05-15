@@ -11,16 +11,17 @@ public class GameManager : MonoBehaviour
     private Player player;
 
     [SerializeField]
+    private EnemySpawner enemySpawner;
+
+    [SerializeField]
     private GameObject gameOverPanel;
 
     [SerializeField]
     private GameObject gameWonPanel;
 
-    public Player Player
-    {
-        get => player;
-        set => player = value;
-    }
+    public Player Player => player;
+
+    public EnemySpawner EnemySpawner => enemySpawner;
 
     private void Awake()
     {
@@ -47,7 +48,10 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 0;
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.Confined;
-        gameOverPanel.SetActive(true);
+        if (gameOverPanel != null)
+        {
+            gameOverPanel.SetActive(true);
+        }
     }
 
     public void GameWon()
@@ -55,7 +59,10 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 0;
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.Confined;
-        gameWonPanel.SetActive(true);
+        if (gameWonPanel != null)
+        {
+            gameWonPanel.SetActive(true);
+        }
     }
 
     public void RestartLevel()

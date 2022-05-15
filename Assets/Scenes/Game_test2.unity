@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.07744138, g: 0.10995603, b: 0.11724728, a: 1}
+  m_IndirectSpecularColor: {r: 0.093629375, g: 0.154562, b: 0.2511377, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -328,7 +328,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1352746292}
+  enemySpawner: {fileID: 2092560629}
   gameOverPanel: {fileID: 1551753688}
+  gameWonPanel: {fileID: 0}
 --- !u!4 &522917566
 Transform:
   m_ObjectHideFlags: 0

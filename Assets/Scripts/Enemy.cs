@@ -107,6 +107,11 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    private void OnDestroy()
+    {
+        GameManager.Instance?.EnemySpawner?.DeleteEnemyRecord(this);
+    }
+
     public void TakeHit()
     {
         state = EnemyState.DEAD;
@@ -120,8 +125,6 @@ public class Enemy : MonoBehaviour
         }
         dissolveStartTime = jointsRenderer.material.GetFloat("StartTime");
         enemyGun.SetActive(false);
-        
-
     }
 
     private bool CheckStateTransitions()
