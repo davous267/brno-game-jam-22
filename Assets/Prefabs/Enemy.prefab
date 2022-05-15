@@ -111,7 +111,7 @@ MonoBehaviour:
   enemyGun: {fileID: 7937165179110638245}
   enemyHit: {fileID: 8300000, guid: 05120f3f485e5584583db38e85526edf, type: 3}
   enemyShot: {fileID: 8300000, guid: 9d95623fd7d31f141b7f5a0324574dc5, type: 3}
-  enemyWalk: {fileID: 0}
+  enemyWalk: {fileID: 8300000, guid: f8c14f2814b4b124a894a65c32c44987, type: 3}
 --- !u!136 &870090925593016076
 CapsuleCollider:
   m_ObjectHideFlags: 0

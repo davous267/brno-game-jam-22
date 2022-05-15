@@ -33,14 +33,19 @@ public class Player : MonoBehaviour
     private GameObject[] gunScreens;
 
     [SerializeField]
+    private AudioClip bodyHit;
+
+    [SerializeField]
     private TMPro.TMP_Text enemyCountText;
 
+    private AudioSource audioSource;
     private Color defaultCrosshairColor;
     private bool waitForButtonUp;
     private Bullet lastBullet;
     private int startHealth;
     private int currentActiveGunScreen = 0;
 
+    
     public Vector3 BarrelPosition
     {
         get => gunBarrel.position;    
@@ -71,6 +76,7 @@ public class Player : MonoBehaviour
         GameManager.Instance.EnemySpawner.EnemyCountChanged.AddListener(UpdateEnemyCountScreen);
         SetActiveGunScreen(0);
         startHealth = Health;
+        audioSource = GetComponent<AudioSource>();
     }
 
     private void Update()

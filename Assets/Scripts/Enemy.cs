@@ -67,7 +67,6 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private AudioClip enemyWalk;
 
-
     private AudioSource audioSource;
     private Renderer[] enemyRenderer;
 
@@ -187,6 +186,8 @@ public class Enemy : MonoBehaviour
     {
         if (state == EnemyState.WANDERING)
         {
+            audioSource.clip = enemyWalk;
+            audioSource.Play();
             if (DestinationReached())
             {
                 SetAgentDestination(GetRandomNavmeshLocation(16.0f));
@@ -196,6 +197,8 @@ public class Enemy : MonoBehaviour
         }
         else if (state == EnemyState.PURSUING)
         {
+            audioSource.clip = enemyWalk;
+            audioSource.Play();
             SetAgentDestination(GetPlayerNavmeshLocation());
             Debug.DrawLine(transform.position, currentDestination, Color.yellow);
         }
@@ -203,6 +206,8 @@ public class Enemy : MonoBehaviour
         {
             if (Vector3.Distance(player.transform.position, transform.position) > fireDistance)
             {
+                audioSource.clip = enemyWalk;
+                audioSource.Play();
                 enemyAnimator.SetBool("isWalking", true);
                 SetAgentDestination(GetPlayerNavmeshLocation());
                 Debug.DrawLine(transform.position, currentDestination, Color.red);
@@ -210,6 +215,8 @@ public class Enemy : MonoBehaviour
             else
             {
                 agent.isStopped = true;
+                audioSource.clip = enemyWalk;
+                audioSource.Stop();
                 enemyAnimator.SetBool("isWalking", false);
                 bool playerInLineOfSight = IsPlayerInLineOfSight();
                 
