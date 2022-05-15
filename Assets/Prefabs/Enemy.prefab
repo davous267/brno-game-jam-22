@@ -97,10 +97,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   agent: {fileID: 870090925593016077}
-  startPursuitDistance: 8
-  startPursuitIfNotInFieldOfView: 3
-  attackRadiusDistance: 5
-  fireDistance: 4
+  startPursuitDistance: 10
+  startPursuitIfNotInFieldOfView: 5
+  attackRadiusDistance: 8
+  fireDistance: 6
   wanderingFieldOfViewDeg: 90
   pursuingFieldOfViewDeg: 180
   bulletSpawnLocation: {fileID: 1111800602575361256}
@@ -108,6 +108,10 @@ MonoBehaviour:
   fireInterval: 1
   dissolveMaterial: {fileID: 2100000, guid: 4809272e50b233342a42ed43ecbc8ce5, type: 2}
   jointsRenderer: {fileID: 1158143365366091741}
+  bodyRenderer: {fileID: 2155494190095460305}
+  greenMaterial: {fileID: 2100000, guid: 6adcdda3244ec4c49b962c7428778301, type: 2}
+  redMaterial: {fileID: 2100000, guid: 47d4f0e314fe3404b9f4bffe1e42aed5, type: 2}
+  jointMaterial: {fileID: 2100000, guid: 81d85e3ed5d25ec4796b62f9d6719853, type: 2}
   enemyGun: {fileID: 7937165179110638245}
   enemyHit: {fileID: 8300000, guid: 05120f3f485e5584583db38e85526edf, type: 3}
   enemyShot: {fileID: 8300000, guid: 9d95623fd7d31f141b7f5a0324574dc5, type: 3}
@@ -139,7 +143,7 @@ NavMeshAgent:
   m_Speed: 3
   m_Acceleration: 8
   avoidancePriority: 50
-  m_AngularSpeed: 180
+  m_AngularSpeed: 360
   m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
@@ -678,6 +682,11 @@ Transform:
 --- !u!4 &5195209015254949228 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -4372587343206045713, guid: 4c77683a80da48547a81021ebb6dc8d7, type: 3}
+  m_PrefabInstance: {fileID: 813011782044498563}
+  m_PrefabAsset: {fileID: 0}
+--- !u!137 &2155494190095460305 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 1630794972795428178, guid: 4c77683a80da48547a81021ebb6dc8d7, type: 3}
   m_PrefabInstance: {fileID: 813011782044498563}
   m_PrefabAsset: {fileID: 0}
 --- !u!137 &1158143365366091741 stripped
