@@ -97,7 +97,7 @@ public class Enemy : MonoBehaviour
         {
             if (CheckStateTransitions())
             {
-                Debug.Log("Enemy state changed: " + state.ToString());
+                //Debug.Log("Enemy state changed: " + state.ToString());
             }
             Behave();
         }
