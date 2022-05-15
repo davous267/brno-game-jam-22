@@ -11,7 +11,6 @@ public class UI : MonoBehaviour
     [SerializeField]
     GameObject mainMenu;
 
-
     public void PlayGame()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
@@ -30,6 +29,7 @@ public class UI : MonoBehaviour
 
     public void ReturnToMenu()
     {
+        Time.timeScale = 1;
         creditsMenu.SetActive(false);
         mainMenu.SetActive(true);
     }
