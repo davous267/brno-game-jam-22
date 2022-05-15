@@ -34,9 +34,13 @@ public class Bullet : MonoBehaviour
     [SerializeField]
     private AudioClip reverseBulletSound;
 
+    [SerializeField]
+    private AudioClip wallHit;
+
     private AudioSource audioSource;
     private bool returningToPlayer = false;
     private bool playedReverseAudio = false;
+    private bool playedWallHitAudio = false;
 
     public GameObject enemyThatFired;
     private void Start()
@@ -82,6 +86,12 @@ public class Bullet : MonoBehaviour
                 gameObject.layer = 6;
                 enemyThatFired = null;
                 bulletTrigger.enabled = true;
+
+                if (!playedWallHitAudio)
+                {
+                    audioSource.PlayOneShot(wallHit, 1f);
+                    playedWallHitAudio = true;
+                }
                 // Invoke is not very good but easiest option now ...
                 Invoke("DestroyBullet", wallLifetime);
             } 

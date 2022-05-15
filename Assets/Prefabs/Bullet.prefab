@@ -139,6 +139,7 @@ MonoBehaviour:
   damage: 10
   trailRenderer: {fileID: 9160164506180078986}
   reverseBulletSound: {fileID: 8300000, guid: cba997c07ae01db45883c407b6d8c0c0, type: 3}
+  wallHit: {fileID: 8300000, guid: 96d90174b0b2ec74c86a5553c21731bb, type: 3}
   enemyThatFired: {fileID: 0}
 --- !u!136 &9081338312591389255
 CapsuleCollider:
@@ -310,7 +311,7 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 1
+  MinDistance: 0
   MaxDistance: 20
   Pan2D: 0
   rolloffMode: 1
@@ -346,7 +347,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0

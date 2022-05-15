@@ -41,7 +41,6 @@ public class Player : MonoBehaviour
     [SerializeField]
     private GameObject bloodyVignette;
 
-    private AudioSource audioSource;
     private Color defaultCrosshairColor;
     private bool waitForButtonUp;
     private Bullet lastBullet;
@@ -79,7 +78,6 @@ public class Player : MonoBehaviour
         GameManager.Instance.EnemySpawner.EnemyCountChanged.AddListener(UpdateEnemyCountScreen);
         SetActiveGunScreen(0);
         startHealth = Health;
-        audioSource = GetComponent<AudioSource>();
     }
 
     private void Update()
@@ -103,6 +101,7 @@ public class Player : MonoBehaviour
         if (Physics.Raycast(crosshairRay, out hit, 1000.0f, raycastLayers.value, QueryTriggerInteraction.Collide) &&
             ((1 << hit.collider.gameObject.layer) & bulletWallLayer) != 0)
         {
+            Debug.Log(hit.collider.gameObject);
             crosshair.color = higlightCrosshairColor;;
             var blt = hit.collider.gameObject.GetComponent<Bullet>();
             blt.ShowForceField();
@@ -128,6 +127,7 @@ public class Player : MonoBehaviour
     public void TakeDamage(int damage)
     {
         Health -= damage;
+        AudioSource.PlayClipAtPoint(bodyHit, transform.position, 1f);
         StartCoroutine(ShowDamageVignette());
     }
 

@@ -215,8 +215,8 @@ public class Enemy : MonoBehaviour
             else
             {
                 agent.isStopped = true;
-                audioSource.clip = enemyWalk;
-                audioSource.Stop();
+                audioSource.clip = null;
+                //audioSource.Stop();
                 enemyAnimator.SetBool("isWalking", false);
                 bool playerInLineOfSight = IsPlayerInLineOfSight();
                 
