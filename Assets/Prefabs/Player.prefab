@@ -1276,9 +1276,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fpsCamera: {fileID: 4052208192725371087}
-  headBobIdling: 0.015
+  headBobIdling: 0.018
   headBobNormal: 0.05
-  headBobSprint: 0.08
+  headBobSprint: 0.065
   headBobFreqMultiplier: 0.001
   speed: 5
   canRun: 1
