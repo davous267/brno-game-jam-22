@@ -29,10 +29,15 @@ public class FirstPersonMovement : MonoBehaviour
     /// <summary> Functions to override movement speed. Will use the last added override. </summary>
     public List<System.Func<float>> speedOverrides = new List<System.Func<float>>();
 
+    private float defaultHeadYpos;
+    private float lastHbAmplitude = -1.0f;
+    private float sinArg = 0.0f;
+
     void Awake()
     {
         // Get the rigidbody on this.
         rigidbody = GetComponent<Rigidbody>();
+        defaultHeadYpos = fpsCamera.transform.localPosition.y;
     }
 
     void FixedUpdate()
@@ -48,7 +53,7 @@ public class FirstPersonMovement : MonoBehaviour
         }
 
         // Get targetVelocity from input.
-        Vector2 targetVelocity =new Vector2( Input.GetAxis("Horizontal") * targetMovingSpeed, Input.GetAxis("Vertical") * targetMovingSpeed);
+        Vector2 targetVelocity = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical")).normalized * targetMovingSpeed;
 
         // Apply movement.
         rigidbody.velocity = transform.rotation * new Vector3(targetVelocity.x, rigidbody.velocity.y, targetVelocity.y);
@@ -56,8 +61,17 @@ public class FirstPersonMovement : MonoBehaviour
         // Head bob ...
         bool isIdling = targetVelocity.magnitude <= float.Epsilon;
         float hbAmplitude = isIdling ? headBobIdling : (IsRunning ? headBobSprint : headBobNormal);
-        float hbFerqMult = isIdling ? 1.0f : headBobFreqMultiplier;
+        
+        // Return to default y-pos when you change movement type / amplitude with which you work...
+        if (lastHbAmplitude >= 0.0f && lastHbAmplitude != hbAmplitude)
+        {
+            fpsCamera.transform.localPosition = new Vector3(fpsCamera.transform.localPosition.x, defaultHeadYpos, fpsCamera.transform.localPosition.z);
+            lastHbAmplitude = hbAmplitude;
+        }
 
-        fpsCamera.transform.Translate(new Vector3(0.0f, Mathf.Sin(Time.time * targetMovingSpeed * hbFerqMult) * hbAmplitude, 0.0f), Space.Self);
+        sinArg = (sinArg + ((isIdling ? 1.0f : targetMovingSpeed) * headBobFreqMultiplier) / Time.deltaTime) % (2.0f * Mathf.PI);
+        fpsCamera.transform.localPosition = new Vector3(fpsCamera.transform.localPosition.x,
+            defaultHeadYpos + Mathf.Sin(sinArg) * hbAmplitude,
+            fpsCamera.transform.localPosition.z);
     }
 }
