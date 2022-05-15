@@ -60,7 +60,7 @@ public class Bullet : MonoBehaviour
 
             if ((Vector3.Distance(transform.position, GameManager.Instance.Player.BarrelPosition)) <= 4f && !audioSource.isPlaying && !playedReverseAudio)
             {
-                audioSource.PlayOneShot(reverseBulletSound, 1f);
+                audioSource.PlayOneShot(reverseBulletSound, 0.2f);
                 playedReverseAudio = true;
             }
         }
@@ -89,7 +89,7 @@ public class Bullet : MonoBehaviour
 
                 if (!playedWallHitAudio)
                 {
-                    audioSource.PlayOneShot(wallHit, 1f);
+                    audioSource.PlayOneShot(wallHit, 0.2f);
                     playedWallHitAudio = true;
                 }
                 // Invoke is not very good but easiest option now ...

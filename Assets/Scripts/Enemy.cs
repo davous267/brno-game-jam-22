@@ -142,7 +142,7 @@ public class Enemy : MonoBehaviour
             state = EnemyState.DEAD;
             enemyAnimator.SetBool("isWalking", false);
             jointsRenderer.material = dissolveMaterial;
-            audioSource.PlayOneShot(enemyHit, 0.2f);
+            audioSource.PlayOneShot(enemyHit, 0.1f);
             GetComponent<Collider>().enabled = false;
 
             foreach (Renderer renderer in enemyRenderer)
@@ -258,7 +258,7 @@ public class Enemy : MonoBehaviour
             var newBullet = Instantiate(bulletPrefab, bulletSpawnLocation.transform.position, bulletSpawnLocation.transform.rotation);
             newBullet.GetComponent<Bullet>().enemyThatFired = gameObject;
             newBullet.GetComponent<Rigidbody>().AddForce(transform.forward * 15.0f, ForceMode.Impulse);
-            audioSource.PlayOneShot(enemyShot, 0.2f);
+            audioSource.PlayOneShot(enemyShot, 0.1f);
 
 
             lastFireTime = Time.time;
