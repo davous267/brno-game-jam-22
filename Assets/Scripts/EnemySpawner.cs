@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class EnemySpawner : MonoBehaviour
 {
@@ -11,6 +12,10 @@ public class EnemySpawner : MonoBehaviour
     private Transform spawnPointsParent;
 
     private List<Enemy> spawnedEnemies = new List<Enemy>();
+
+    public UnityEvent EnemyCountChanged = new UnityEvent();
+
+    public int EnemyCount => spawnedEnemies.Count;
 
     private IEnumerator Start()
     {
@@ -31,13 +36,15 @@ public class EnemySpawner : MonoBehaviour
     public void RecordNewEnemy(Enemy enemy)
     {
         spawnedEnemies.Add(enemy);
+        EnemyCountChanged.Invoke();
     }
 
     public void DeleteEnemyRecord(Enemy enemy)
     {
         spawnedEnemies.Remove(enemy);
+        EnemyCountChanged.Invoke();
 
-        if(spawnedEnemies.Count == 0)
+        if (spawnedEnemies.Count == 0)
         {
             GameManager.Instance?.GameWon();
         }

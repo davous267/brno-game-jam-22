@@ -20,6 +20,9 @@ public class Bullet : MonoBehaviour
     private GameObject forceField;
 
     [SerializeField]
+    private GameObject seeThroughBullet;
+
+    [SerializeField]
     private float wallLifetime = 60.0f;
 
     [SerializeField]
@@ -49,13 +52,21 @@ public class Bullet : MonoBehaviour
             rb.rotation = Quaternion.LookRotation(-dir);
             rb.MovePosition(transform.position + dir * Time.deltaTime * returnSpeed);
             forceField.SetActive(false);
+            seeThroughBullet.SetActive(false);
 
-            if((Vector3.Distance(transform.position, GameManager.Instance.Player.BarrelPosition)) <= 4f && !audioSource.isPlaying && !playedReverseAudio)
-            {              
+            if ((Vector3.Distance(transform.position, GameManager.Instance.Player.BarrelPosition)) <= 4f && !audioSource.isPlaying && !playedReverseAudio)
+            {
                 audioSource.PlayOneShot(reverseBulletSound, 1f);
                 playedReverseAudio = true;
             }
-
+        }
+        else
+        {
+            // Not very effective. Anyway, checks if there is (only) enemy between player and bullet and if so, shows the see-through bullet
+            seeThroughBullet.SetActive(
+                Physics.Linecast(transform.position, GameManager.Instance.Player.HitPoint, 1 << LayerMask.NameToLayer("Enemy")) &&
+                !Physics.Linecast(transform.position, GameManager.Instance.Player.HitPoint, 1 << LayerMask.NameToLayer("Default"))
+                );
         }
     }
 

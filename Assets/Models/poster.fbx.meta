@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: b52317445e4606041ac8c30f3b5fda23
+guid: 2264a3975fc6e7747980c097e54bff95
 ModelImporter:
   serializedVersion: 20200
   internalIDToNameTable: []
@@ -7,16 +7,21 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Ceramic_Tile
-    second: {fileID: 2100000, guid: e85fb1b7a7bcb4f4ea1a369703dd0b96, type: 2}
+      name: Stone_Random_Ashlar
+    second: {fileID: 2100000, guid: 349fd6e5151e30548b791858a3b5ecef, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: red_barrel
-    second: {fileID: 2100000, guid: 7d35f59ca999a0a4391f2fa85d072a9d, type: 2}
+      name: poster
+    second: {fileID: 2100000, guid: 349fd6e5151e30548b791858a3b5ecef, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: test_color
+    second: {fileID: 2100000, guid: e3f2e1897a632084fb63b4e8b0d28993, type: 2}
   materials:
     materialImportMode: 2
-    materialName: 0
+    materialName: 1
     materialSearch: 1
     materialLocation: 1
   animations:
@@ -44,7 +49,7 @@ ModelImporter:
     isReadable: 0
   meshes:
     lODScreenPercentages: []
-    globalScale: 0.01
+    globalScale: 0.1
     meshCompression: 0
     addColliders: 0
     useSRGBMaterialColor: 1
@@ -95,7 +100,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 0.01
+    globalScale: 0.1
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0
