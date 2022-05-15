@@ -23,6 +23,9 @@ public class Player : MonoBehaviour
     [SerializeField]
     private Transform gunBarrel;
 
+    [SerializeField]
+    private Transform hitPoint;
+
     private Color defaultCrosshairColor;
 
     private bool waitForButtonUp;
@@ -34,6 +37,11 @@ public class Player : MonoBehaviour
     public Vector3 BarrelPosition
     {
         get => gunBarrel.position;    
+    }
+
+    public Vector3 HitPoint
+    {
+        get => hitPoint.position;
     }
 
     public int Health

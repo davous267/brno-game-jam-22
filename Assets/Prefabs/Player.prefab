@@ -766,6 +766,7 @@ Transform:
   - {fileID: 4160191819206170749}
   - {fileID: 4155429786658492167}
   - {fileID: 9082685694718964980}
+  - {fileID: 5189057342381452795}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -819,6 +820,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   gunBarrel: {fileID: 9082685694718964980}
+  hitPoint: {fileID: 5189057342381452795}
 --- !u!114 &4049690278645486469
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -835,6 +837,7 @@ MonoBehaviour:
   headBobIdling: 0.001
   headBobNormal: 0.01
   headBobSprint: 0.02
+  headBobFreqMultiplier: 2
   speed: 5
   canRun: 1
   runSpeed: 9
@@ -1615,6 +1618,36 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!1 &8000713222257475378
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5189057342381452795}
+  m_Layer: 8
+  m_Name: Hit Point
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5189057342381452795
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8000713222257475378}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.4, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4154007556476299697}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8197775210977187779
 GameObject:
   m_ObjectHideFlags: 0

@@ -20,11 +20,12 @@ public class Bullet : MonoBehaviour
     private GameObject forceField;
 
     [SerializeField]
-    private float wallLifetime = 60.0f; 
+    private float wallLifetime = 60.0f;
+
+    [SerializeField]
+    private int damage = 10;
 
     private bool returningToPlayer = false;
-
-    private int damage = 35;
 
     public GameObject enemyThatFired;
 

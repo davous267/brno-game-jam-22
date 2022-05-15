@@ -114,17 +114,20 @@ public class Enemy : MonoBehaviour
 
     public void TakeHit()
     {
-        state = EnemyState.DEAD;
-        enemyAnimator.SetBool("isWalking", false);
-        jointsRenderer.material = dissolveMaterial;
-
-        foreach (Renderer renderer in enemyRenderer)
+        if (state != EnemyState.DEAD)
         {
-            renderer.material = dissolveMaterial;
-            dissolveStartTime = renderer.material.GetFloat("StartTime");
+            state = EnemyState.DEAD;
+            enemyAnimator.SetBool("isWalking", false);
+            jointsRenderer.material = dissolveMaterial;
+
+            foreach (Renderer renderer in enemyRenderer)
+            {
+                renderer.material = dissolveMaterial;
+                dissolveStartTime = renderer.material.GetFloat("StartTime");
+            }
+            dissolveStartTime = jointsRenderer.material.GetFloat("StartTime");
+            enemyGun.SetActive(false);
         }
-        dissolveStartTime = jointsRenderer.material.GetFloat("StartTime");
-        enemyGun.SetActive(false);
     }
 
     private bool CheckStateTransitions()
@@ -187,6 +190,7 @@ public class Enemy : MonoBehaviour
         {
             if (Vector3.Distance(player.transform.position, transform.position) > fireDistance)
             {
+                enemyAnimator.SetBool("isWalking", true);
                 SetAgentDestination(GetPlayerNavmeshLocation());
                 Debug.DrawLine(transform.position, currentDestination, Color.red);
             }
@@ -195,11 +199,11 @@ public class Enemy : MonoBehaviour
                 agent.isStopped = true;
                 enemyAnimator.SetBool("isWalking", false);
                 bool playerInLineOfSight = IsPlayerInLineOfSight();
-
+                
                 if (!playerInLineOfSight)
                 {
                     transform.forward = Vector3.RotateTowards(Vector3.ProjectOnPlane(transform.forward, Vector3.up),
-                        Vector3.ProjectOnPlane(player.transform.position - transform.position, Vector3.up),
+                        Vector3.ProjectOnPlane(player.HitPoint - transform.position, Vector3.up),
                         Mathf.Deg2Rad * agent.angularSpeed * Time.deltaTime, 0.0f).normalized;
                 }
             }
@@ -269,7 +273,7 @@ public class Enemy : MonoBehaviour
     private bool IsPlayerInLineOfSight(out float distance)
     {
         RaycastHit hit;
-        if (Physics.Raycast(bulletSpawnLocation.transform.position, (player.BarrelPosition - bulletSpawnLocation.transform.position).normalized, out hit))
+        if (Physics.Raycast(bulletSpawnLocation.transform.position, transform.forward.normalized, out hit))
         {
             distance = hit.distance;
             return hit.collider.gameObject.tag == "Player";
@@ -291,8 +295,8 @@ public class Enemy : MonoBehaviour
 
         if ((ignoreFov || (!ignoreFov && Vector3.Angle(
                 Vector3.ProjectOnPlane(transform.forward, Vector3.up),
-                Vector3.ProjectOnPlane(player.BarrelPosition - bulletSpawnLocation.transform.position, Vector3.up)) <= FieldOfView))
-            && Physics.Linecast(bulletSpawnLocation.transform.position, player.transform.position, out hit, ~(1 << LayerMask.NameToLayer("Enemy"))))
+                Vector3.ProjectOnPlane(player.HitPoint - bulletSpawnLocation.transform.position, Vector3.up)) <= FieldOfView))
+            && Physics.Linecast(bulletSpawnLocation.transform.position, player.HitPoint, out hit, ~(1 << LayerMask.NameToLayer("Enemy"))))
         {
             distance = hit.distance;
             return hit.collider.gameObject.CompareTag("Player");
