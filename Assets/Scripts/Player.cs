@@ -29,13 +29,17 @@ public class Player : MonoBehaviour
     [SerializeField]
     private Transform hitPoint;
 
+    [SerializeField]
+    private GameObject[] gunScreens;
+
+    [SerializeField]
+    private TMPro.TMP_Text enemyCountText;
+
     private Color defaultCrosshairColor;
-
     private bool waitForButtonUp;
-
     private Bullet lastBullet;
-
     private int startHealth;
+    private int currentActiveGunScreen = 0;
 
     public Vector3 BarrelPosition
     {
@@ -64,6 +68,8 @@ public class Player : MonoBehaviour
     private void Start()
     {
         defaultCrosshairColor = crosshair.color;
+        GameManager.Instance.EnemySpawner.EnemyCountChanged.AddListener(UpdateEnemyCountScreen);
+        SetActiveGunScreen(0);
         startHealth = Health;
     }
 
@@ -72,6 +78,11 @@ public class Player : MonoBehaviour
         if (Input.GetMouseButtonUp(0))
         {
             waitForButtonUp = false;
+        }
+
+        if(Input.GetMouseButtonDown(1))
+        {
+            SetActiveGunScreen((currentActiveGunScreen + 1) % gunScreens.Length);
         }
     }
 
@@ -105,14 +116,28 @@ public class Player : MonoBehaviour
         }
     }
 
+    public void TakeDamage(int damage)
+    {
+        Health -= damage;
+    }
+
     private Ray GetScreenRay()
     {
         return Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
     }
 
-    public void TakeDamage(int damage)
+    private void UpdateEnemyCountScreen()
     {
-        Health -= damage;
-        Debug.Log(Health);
+        enemyCountText.text = GameManager.Instance.EnemySpawner.EnemyCount.ToString();
+    }
+
+    private void SetActiveGunScreen(int idx)
+    {
+        for(int i = 0; i < gunScreens.Length; ++i)
+        {
+            gunScreens[i].SetActive(idx == i);
+        }
+
+        currentActiveGunScreen = idx;
     }
 }
