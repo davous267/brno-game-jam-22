@@ -839,7 +839,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5445156210593948720, guid: 01fcd4e8e767c6f469607255c315d023, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5445156210593948724, guid: 01fcd4e8e767c6f469607255c315d023, type: 3}
       propertyPath: m_RootOrder
@@ -1468,6 +1468,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyPrefab: {fileID: 870090925593016066, guid: d77471ae0a193834393c9c62c9d26836, type: 3}
   spawnPointsParent: {fileID: 2092560628}
+  EnemyCountChanged:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1001 &752828443976481672
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1493,7 +1496,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 752828443619988862, guid: b00da0666430aea4abca9ad0009700b6, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 752828443619988862, guid: b00da0666430aea4abca9ad0009700b6, type: 3}
       propertyPath: m_AnchorMax.x
